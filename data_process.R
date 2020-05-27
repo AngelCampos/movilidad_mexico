@@ -7,7 +7,7 @@ library(tidyr)
 data <- fread(grep(pattern = "^applemobilitytrends*", list.files(), value = T, ),
               sep = ",", header = T)
 
-# A EspaÃ±ol y correcciones de nombres
+# A Español y correcciones de nombres
 mxDATA <- data[country == "Mexico" | region == "Mexico",]
 mxDATA$geo_type <- gsub(pattern = "country/region", replacement = "Nacional", x = mxDATA$geo_type)
 mxDATA$geo_type <- gsub(pattern = "city", replacement = "Ciudad", x = mxDATA$geo_type)
@@ -16,7 +16,7 @@ mxDATA$geo_type <- gsub(pattern = "sub-region", replacement = "Estado", x = mxDA
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Mexico$")] <- "Nacional"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Ju(.)+rez$")] <- "Juárez"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Mexico City$")] <- "Cd. de México"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Le(.)+n$")] <- "LeÃ³n"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Le(.)+n$")] <- "León"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Nuevo Le(.)+n$")] <- "Nuevo León"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Puebla$")] <- "Cd. de Puebla"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Puebla(.)+$")] <- "Estado de Puebla"
