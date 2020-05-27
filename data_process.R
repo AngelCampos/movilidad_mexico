@@ -14,21 +14,21 @@ mxDATA$geo_type <- gsub(pattern = "city", replacement = "Ciudad", x = mxDATA$geo
 mxDATA$geo_type <- gsub(pattern = "sub-region", replacement = "Estado", x = mxDATA$geo_type)
 
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Mexico$")] <- "Nacional"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Ju(.)+rez$")] <- "JuÃ¡rez"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Mexico City$")] <- "Cd. de MÃ©xico"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Ju(.)+rez$")] <- "Juárez"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Mexico City$")] <- "Cd. de México"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Le(.)+n$")] <- "LeÃ³n"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Nuevo Le(.)+n$")] <- "Nuevo LeÃ³n"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Nuevo Le(.)+n$")] <- "Nuevo León"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Puebla$")] <- "Cd. de Puebla"
 mxDATA$region[str_detect(mxDATA$region, pattern = "^Puebla(.)+$")] <- "Estado de Puebla"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^State of Mex(.)+$")] <- "Estado de MÃ©xico"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Michoa(.)+$")] <- "MichoacÃ¡n"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Quer(.)+taro$")] <- "QuerÃ©taro"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^San Luis Poto(.)+$")] <- "San Luis PotosÃ­"
-mxDATA$region[str_detect(mxDATA$region, pattern = "^Yucat(.)+$")] <- "YucatÃ¡n"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^State of Mex(.)+$")] <- "Estado de México"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Michoa(.)+$")] <- "Michoacán"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Quer(.)+taro$")] <- "Querétaro"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^San Luis Poto(.)+$")] <- "San Luis Potosí"
+mxDATA$region[str_detect(mxDATA$region, pattern = "^Yucat(.)+$")] <- "Yucatán"
 
 mxDATA$transportation_type[str_detect(mxDATA$transportation_type, pattern = "^driving$")] <- "Automovil"
 mxDATA$transportation_type[str_detect(mxDATA$transportation_type, pattern = "^walking$")] <- "Peatones"
-mxDATA$transportation_type[str_detect(mxDATA$transportation_type, pattern = "^transit$")] <- "PÃºblico"
+mxDATA$transportation_type[str_detect(mxDATA$transportation_type, pattern = "^transit$")] <- "Público"
 mxDATA <- mxDATA[,c(-4:-6)]
 
 # Long data format
