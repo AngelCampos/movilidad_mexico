@@ -64,7 +64,9 @@ server <- function(input, output){
             scale_color_viridis(discrete = TRUE, name = "Estado") +
             theme(legend.position = "bottom") + facet_grid(transportation_type ~ .) +
             geom_hline(yintercept = 0)
-        print(ggplotly(gg))
+        ggplotly(gg) %>% 
+            layout(legend = list(orientation = "h", xanchor = "center", x = 0.5,
+                                 y = -0.25))
     })
 }
 
