@@ -40,10 +40,10 @@ ui <- fluidPage(
                                label = "Tipos de transporte",
                                choices = tTransp,
                                selected = c("Automovil", "Peatones")),
-            fluidRow(checkboxGroupInput(inputId = "states",
+            checkboxGroupInput(inputId = "states",
                                                           label = "Selecciona los estados a visualizar",
                                                           choices = estados,
-                                                          selected = ciudades))
+                                                          selected = ciudades)
         )
     ),
     fluidRow("Los datos usados en esta aplicación web son abiertos, pero Apple mantiene todos los derechos reservados. Esta aplicación sólo tiene fines informativos. Más información en:", a(href="https://www.apple.com/covid19/mobility", "https://www.apple.com/covid19/mobility"))
@@ -56,7 +56,7 @@ server <- function(input, output){
                               transportation_type %in% input$transport &
                               day >= input$days[1] & day <= input$days[2],]
         gg <- ggplot(tmpDATA, aes(y = Movilidad, x = day, group = region)) +
-            geom_line(size = 1.3, aes(colour = region)) + theme_minimal(base_size = 16) +
+            geom_line(size = 0.8, aes(colour = region)) + theme_minimal(base_size = 16) +
             scale_x_date(breaks = unique(tmpDATA$day)[seq(1, length(unique(tmpDATA$day)), by = 5)]) +
             theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
             scale_y_continuous(breaks = seq(140, -80, -20), limits = mov_lims) +
