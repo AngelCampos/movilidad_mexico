@@ -18,7 +18,7 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         mainPanel(
-            plotlyOutput("distPlot", height = "700px")
+            plotlyOutput("distPlot", height = "750px")
         ),
         sidebarPanel(
             fluidRow(h4("Autor: ", a(href="https://angelcampos.github.io/", "AngelCampos"))),
@@ -62,7 +62,7 @@ server <- function(input, output){
             scale_y_continuous(breaks = seq(140, -80, -20), limits = mov_lims) +
             ylab("Movilidad %") + xlab(" ") +
             scale_color_viridis(discrete = TRUE, name = "Estado") +
-            theme(legend.position = "bottom") + facet_grid(transportation_type ~ .) +
+            theme(legend.position = "bottom", panel.spacing = unit(4, "lines")) + facet_grid(transportation_type ~ .) +
             geom_hline(yintercept = 0)
         ggplotly(gg) %>% 
             layout(legend = list(orientation = "h", xanchor = "center", x = 0.5,
