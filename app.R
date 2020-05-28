@@ -3,22 +3,22 @@ library(ggplot2)
 library(magrittr)
 library(data.table)
 library(viridis)
-library(plotly)
+# library(plotly)
 # Load data
 mxDATA <- readRDS("mexData.rds") %>% data.table()
 mov_lims <- c(min(mxDATA$Movilidad, na.rm= T) + 5, max(mxDATA$Movilidad, na.rm= T) + 5)
 estados <- mxDATA$region %>% unique
 tTransp <- mxDATA$transportation_type %>% unique
-ciudades <- mxDATA$region[mxDATA$geo_type != "Estado"]
+ciudades <- mxDATA$region[mxDATA$geo_type == "Ciudad"] %>% unique %>% as.character()
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     # Application title
-    titlePanel("Movilidad en México por estados: Contingencia COVID-19"),
+    titlePanel("COVID-19: Movilidad en México por estados y ciudades"),
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         mainPanel(
-            plotlyOutput("distPlot", height = "750px")
+            plotOutput("distPlot", height = "700px")
         ),
         sidebarPanel(
             fluidRow(h4("Autor: ", a(href="https://angelcampos.github.io/", "AngelCampos"))),
@@ -35,7 +35,7 @@ ui <- fluidPage(
                         "Rango de días:",
                         min = min(mxDATA$day),
                         max = max(mxDATA$day),
-                        value = c(as.Date("2020-02-22"),max(mxDATA$day))),
+                        value = c(as.Date("2020-03-01"), max(mxDATA$day))),
             checkboxGroupInput(inputId = "transport",
                                label = "Tipos de transporte",
                                choices = tTransp,
@@ -51,24 +51,27 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output){
-    output$distPlot <- renderPlotly({
+    output$distPlot <- renderPlot({
         tmpDATA <- mxDATA[region %in% input$states &
                               transportation_type %in% input$transport &
                               day >= input$days[1] & day <= input$days[2],]
         gg <- ggplot(tmpDATA, aes(y = Movilidad, x = day, group = region)) +
-            geom_line(size = 0.8, aes(colour = region)) + theme_minimal(base_size = 16) +
+            geom_line(size = 1.25, aes(colour = region)) + theme_minimal(base_size = 18) +
+            scale_y_continuous(breaks = seq(140, -80, -20), limits = mov_lims) +
             scale_x_date(breaks = unique(tmpDATA$day)[seq(1, length(unique(tmpDATA$day)), by = 5)]) +
             theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-            scale_y_continuous(breaks = seq(140, -80, -20), limits = mov_lims) +
-            ylab("Movilidad %") + xlab(" ") +
+            ylab("Movilidad %") + xlab("Día") +
             scale_color_viridis(discrete = TRUE, name = "Estado") +
-            theme(legend.position = "bottom", panel.spacing = unit(3, "lines")) + facet_grid(transportation_type ~ .) +
+            theme(legend.position = "bottom", panel.spacing = unit(1.75, "lines")) + facet_grid(transportation_type ~ .) +
             geom_hline(yintercept = 0)
-        ggplotly(gg) %>% 
-            layout(legend = list(orientation = "h", xanchor = "center", x = 0.5,
-                                 y = -0.25))
+        # ggplotly(gg) %>%
+            # layout(legend = list(orientation = "h", xanchor = "center", x = 0.5,
+                                 # y = -0.25, name = "Estado")) %>% 
+            # layout(margin = list(l=100, r=100, t=100, b=100))
+        gg
     })
 }
+
 
 # Run the application
 shinyApp(ui = ui, server = server)
