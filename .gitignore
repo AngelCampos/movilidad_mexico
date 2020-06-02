@@ -3,3 +3,4 @@
 *.dcf
 .Rhistory
 .Rdata
+analysis.R
